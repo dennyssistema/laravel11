@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CourseRequest;
 use App\Models\Course;
 use Illuminate\Http\Request;
 
@@ -11,15 +12,20 @@ class CourseController extends Controller
     public function index(){
         //Recuperar registros do banco de dados
         //$courses = Course::where('id', 100)->get();
-        $courses = Course::orderBy('id', 'Desc')->get();
+        $courses = Course::orderBy('id', 'ASC')
+            // ->where('id', 1000)
+            //->get();
+            ->paginate(5);
+
         return view('courses.index', [
             'courses' => $courses
         ]);
+        
     }
 
     //Visualizar o curso
-    public function show(Request $request){
-        $course = Course::where('id', $request->course)->first();        
+    public function show(Course $course){
+        //$course = Course::where('id', $request->course)->first();        
         //dd($course);
         return view('courses.show',[
             'course' => $course
@@ -32,29 +38,43 @@ class CourseController extends Controller
     }
 
     //Cadstrar o curso
-    public function store(Request $request){
+    public function store(CourseRequest $request){
+
+        //Validar formulário
+        $request->validated();
 
         Course::create([
-            'name' => $request->name
+            'name' => $request->name,
+            'price' => $request->price
         ]);
 
-        return redirect()->route('courses.create')->with('success', 'Curso cadastrado com sucesso!');
+        return redirect()->route('course.create')->with('success', 'Curso cadastrado com sucesso!');
         
     }
-
     
-    //Visualizar o curso
-    public function edit(){
-        return view('courses.edit');
+    //Editar o curso
+    public function edit(Course $course){
+        //dd($course);
+        return view('courses.edit',[
+            'course' => $course
+        ]);
     }
 
-    //Visualizar o curso
-    public function update(){
-        dd('update');
+    //Editar o curso
+    public function update(Request $request, Course $course){
+        $course->update([
+            'name' => $request->name,
+            'price' => $request->price
+        ]);
+
+        return redirect()->route('course.show', ['course' => $course->id])->with('success', 'Curso editado');
+
     }
 
-    //Visualizar o curso
-    public function destroy(){
-        dd('destroy');
+    //Deletar o curso
+    public function destroy(Course $course){
+        $course->delete();
+
+        return redirect()->route('course.index')->with('success', 'Curso excluído com sucesso');
     }
 }

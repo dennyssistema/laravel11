@@ -9,6 +9,6 @@
     </head>
     <body>
         <h1>Curso de Laravel 11</h1>
-        {{-- <p>Data atual: {{ \Carbon\Carbon::now()->format('d/m/Y H:i:s') }}</p> --}}
+        <a href="{{ route('course.index') }}">Listar cursos</a>
     </body>
 </html>
