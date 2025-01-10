@@ -1,9 +1,27 @@
 ## Requisitos
 * PHP 8.2
 * Composer
+* Node
+* Git
 
 ## Comando para criar um projeto laravel na pasta raiz
 composer create-project laravel/laravel:^11.0 .
+
+## Instalar as dependências do Node.js cria a pasta node_modules instala também o vite
+npm install
+
+## Instalar o framwork Bootstrap
+npm i --save bootstrap @popperjs/core
+
+## Instalar a bibliotec de ícones
+npm i --save @fortawesome/fontawesome-free
+
+## Componente de mascaras para os inputs
+
+npm install inputmask
+
+## Executar bibliotecas Node.js
+npm run dev
 
 ## Comando para iniciar o projeto / starta o server
 php artisan serve

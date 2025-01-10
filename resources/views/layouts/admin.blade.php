@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Cursos</title>
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/styles_sbadmin.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/styles_admin.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/styles_sbadmin.css') }}" rel="stylesheet"> --}}
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    
 </head>
 <body class="sb-nav-fixed">
 
@@ -42,9 +43,14 @@
                         <a class="nav-link" href="{{ route('course.index') }}">
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Cursos
-                        </a>                        
+                        </a>       
+                        
+                        <a class="nav-link" href="{{ route('user.index') }}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Usuários
+                        </a>     
 
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="{{ route('login.destroy') }}">
                             <div class="sb-nav-link-icon"><i class="fa-solid fa-arrow-left"></i></div>
                             Sair
                         </a>     
@@ -53,7 +59,9 @@
                 </div>
                 <div class="sb-sidenav-footer">
                     <div class="small">Logged in as:</div>
-                    Dennys
+                    @if (auth()->check())
+                        {{ auth()->user()->name }}                        
+                    @endif
                 </div>
             </nav>
         </div>    
@@ -78,9 +86,9 @@
         </div>
     </div>    
     
-    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('js/scripts_sbadmin.js') }}"></script>
-    <script src="{{ asset('js/all.min.js') }}"></script>    
+    {{-- <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    {{-- <script src="{{ asset('js/scripts_sbadmin.js') }}"></script> --}}
+    {{-- <script src="{{ asset('js/all.min.js') }}"></script>     --}}
     
 </body>
 </html>

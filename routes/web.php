@@ -2,11 +2,22 @@
 
 use App\Http\Controllers\ClasseController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\ForgotPasswdController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Rotas públicas
+
+Route::get('/', [LoginController::class, 'index'])->name('login.index');
+Route::post('/login', [LoginController::class, 'loginProcess'])->name('login.process');
+Route::get('/logout', [LoginController::class, 'destroy'])->name('login.destroy');
+Route::get('/forgot-password', [ForgotPasswdController::class, 'showForgotPasswd'])->name('forgot-passwd.show');
+Route::post('/forgot-submit-password', [ForgotPasswdController::class, 'submitForgotPasswd'])->name('forgot-passwd.submit');
+
+//Rotas privadas / restritas privadas apenas com autenticação
+
+Route::group(['middleware' => 'auth'], function(){
 
 //Cursos 
 Route::get('/index-course', [CourseController::class, 'index'])->name('course.index');
@@ -25,3 +36,14 @@ Route::post('/store-classe', [ClasseController::class, 'store'])->name('classe.s
 Route::get('/edit-classe/{classe}', [ClasseController::class, 'edit'])->name('classe.edit');
 Route::put('/update-classe/{classe}', [ClasseController::class, 'update'])->name('classe.update');
 Route::delete('/destroy-classe/{classe}', [ClasseController::class, 'destroy'])->name('classe.destroy');
+
+//Usuários 
+Route::get('/index-user', [UserController::class, 'index'])->name('user.index');
+Route::get('/show-user/{user}', [UserController::class, 'show'])->name('user.show');
+Route::get('/create-user', [UserController::class, 'create'])->name('user.create');
+Route::post('/store-user', [UserController::class, 'store'])->name('user.store');
+Route::get('/edit-user/{user}', [UserController::class, 'edit'])->name('user.edit');
+Route::put('/update-user/{user}', [UserController::class, 'update'])->name('user.update');
+Route::delete('/destroy-user/{user}', [UserController::class, 'destroy'])->name('user.destroy');
+
+});

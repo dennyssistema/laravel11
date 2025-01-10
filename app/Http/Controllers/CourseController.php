@@ -45,7 +45,7 @@ class CourseController extends Controller
 
         Course::create([
             'name' => $request->name,
-            'price' => $request->price
+            'price' => str_replace(',', '.', str_replace('.', '', $request->price))
         ]);
 
         return redirect()->route('course.create')->with('success', 'Curso cadastrado com sucesso!');
@@ -64,7 +64,7 @@ class CourseController extends Controller
     public function update(Request $request, Course $course){
         $course->update([
             'name' => $request->name,
-            'price' => $request->price
+            'price' => str_replace(',', '.', str_replace('.', '', $request->price))
         ]);
 
         return redirect()->route('course.show', ['course' => $course->id])->with('success', 'Curso editado');
